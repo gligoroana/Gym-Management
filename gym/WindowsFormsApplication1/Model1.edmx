@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GymModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Diet Plans">
+          <Key>
+            <PropertyRef Name="PlanID" />
+          </Key>
+          <Property Name="PlanID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlanName" Type="varchar" MaxLength="50" />
+          <Property Name="PlanSubscribers" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="Member_ID" />
+          </Key>
+          <Property Name="Member_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Member_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Member_Date" Type="varchar" MaxLength="50" />
+          <Property Name="Member_Email" Type="varchar" MaxLength="50" />
+          <Property Name="Package_ID" Type="varchar" MaxLength="50" />
+          <Property Name="DietPlanID" Type="varchar" MaxLength="50" />
+          <Property Name="Member_sex" Type="varchar" MaxLength="50" />
+          <Property Name="Member_PackageExpiry" Type="datetime" />
+          <Property Name="AddedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Trainer_ID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Packages">
+          <Key>
+            <PropertyRef Name="Package_ID" />
+          </Key>
+          <Property Name="Package_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Package_Time" Type="varchar" MaxLength="50" />
+          <Property Name="Package_Price" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="Trainer_ID" />
+          </Key>
+          <Property Name="Trainer_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Trainer_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Trainer_Address" Type="varchar" MaxLength="50" />
+          <Property Name="Trainer_PhoneNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Members_Diet Plans">
+          <End Role="Diet Plans" Type="Self.Diet Plans" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diet Plans">
+              <PropertyRef Name="PlanID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="DietPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_Packages">
+          <End Role="Packages" Type="Self.Packages" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packages">
+              <PropertyRef Name="Package_ID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="Package_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="Trainer_ID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="Trainer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GymModelStoreContainer">
+          <EntitySet Name="Diet Plans" EntityType="Self.Diet Plans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Packages" EntityType="Self.Packages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Members_Diet Plans" Association="Self.FK_Members_Diet Plans">
+            <End Role="Diet Plans" EntitySet="Diet Plans" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_Packages" Association="Self.FK_Members_Packages">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_Trainer" Association="Self.FK_Members_Trainer">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_User" Association="Self.FK_Members_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GymModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Diet_Plan">
+          <Key>
+            <PropertyRef Name="PlanID" />
+          </Key>
+          <Property Name="PlanID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlanName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanSubscribers" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_Members_Diet_Plans" FromRole="Diet_Plans" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="Member_ID" />
+          </Key>
+          <Property Name="Member_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Member_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Package_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DietPlanID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_PackageExpiry" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Trainer_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Diet_Plans" Relationship="Self.FK_Members_Diet_Plans" FromRole="Members" ToRole="Diet_Plans" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_Members_Packages" FromRole="Members" ToRole="Packages" />
+          <NavigationProperty Name="Trainer" Relationship="Self.FK_Members_Trainer" FromRole="Members" ToRole="Trainer" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Members_User" FromRole="Members" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="Package_ID" />
+          </Key>
+          <Property Name="Package_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Package_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Package_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_Members_Packages" FromRole="Packages" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="Trainer_ID" />
+          </Key>
+          <Property Name="Trainer_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Trainer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Trainer_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Trainer_PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_Members_Trainer" FromRole="Trainer" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_Members_User" FromRole="User" ToRole="Members" />
+        </EntityType>
+        <Association Name="FK_Members_Diet_Plans">
+          <End Role="Diet_Plans" Type="Self.Diet_Plan" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diet_Plans">
+              <PropertyRef Name="PlanID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="DietPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_Packages">
+          <End Role="Packages" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packages">
+              <PropertyRef Name="Package_ID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="Package_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="Trainer_ID" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="Trainer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GymEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Diet_Plans" EntityType="Self.Diet_Plan" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Packages" EntityType="Self.Package" />
+          <EntitySet Name="Trainers" EntityType="Self.Trainer" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Members_Diet_Plans" Association="Self.FK_Members_Diet_Plans">
+            <End Role="Diet_Plans" EntitySet="Diet_Plans" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_Packages" Association="Self.FK_Members_Packages">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_Trainer" Association="Self.FK_Members_Trainer">
+            <End Role="Trainer" EntitySet="Trainers" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members_User" Association="Self.FK_Members_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GymModelStoreContainer" CdmEntityContainer="GymEntities">
+          <EntitySetMapping Name="Diet_Plans">
+            <EntityTypeMapping TypeName="GymModel.Diet_Plan">
+              <MappingFragment StoreEntitySet="Diet Plans">
+                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PlanSubscribers" ColumnName="PlanSubscribers" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="GymModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
+                <ScalarProperty Name="Member_Name" ColumnName="Member_Name" />
+                <ScalarProperty Name="Member_Date" ColumnName="Member_Date" />
+                <ScalarProperty Name="Member_Email" ColumnName="Member_Email" />
+                <ScalarProperty Name="Package_ID" ColumnName="Package_ID" />
+                <ScalarProperty Name="DietPlanID" ColumnName="DietPlanID" />
+                <ScalarProperty Name="Member_sex" ColumnName="Member_sex" />
+                <ScalarProperty Name="Member_PackageExpiry" ColumnName="Member_PackageExpiry" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="Trainer_ID" ColumnName="Trainer_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packages">
+            <EntityTypeMapping TypeName="GymModel.Package">
+              <MappingFragment StoreEntitySet="Packages">
+                <ScalarProperty Name="Package_ID" ColumnName="Package_ID" />
+                <ScalarProperty Name="Package_Time" ColumnName="Package_Time" />
+                <ScalarProperty Name="Package_Price" ColumnName="Package_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainers">
+            <EntityTypeMapping TypeName="GymModel.Trainer">
+              <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="Trainer_ID" ColumnName="Trainer_ID" />
+                <ScalarProperty Name="Trainer_Name" ColumnName="Trainer_Name" />
+                <ScalarProperty Name="Trainer_Address" ColumnName="Trainer_Address" />
+                <ScalarProperty Name="Trainer_PhoneNumber" ColumnName="Trainer_PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GymModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
